@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Navidad
+
+        </title>
+		<style>
+			body { margin: 0;}
+			canvas {position: fixed; top: 0; left: 0}
+		</style>
+	</head>
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r125/three.min.js"></script>
+		<script src="inflate.min.js"></script>
+		<script src="FBXLoader.js"></script>
+		<script src="OrbitControls.js"></script>
+	</body>
+    <script>
+        const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+				const controls = new THREE.OrbitControls(camera, renderer.domElement)
+                
+                //sombras
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+                //Luz
+                // const luz = new THREE.AmbientLight(0xffffe6)
+                // scene.add(luz)
+
+                //camara
+                camera.position.z=30
+
+                //Paredes
+                const ParedesIm = new THREE.TextureLoader().load('./Texturas/Paredes2.jpg')
+                const loaderParedes = new THREE.FBXLoader();
+                loaderParedes.load( './FBX/Paredes4.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:ParedesIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                    
+                } );
+
+                //Piso
+                const PisoIm = new THREE.TextureLoader().load('./Texturas/pisomadera1.png')
+                const loaderPiso = new THREE.FBXLoader();
+                loaderPiso.load( './FBX/Piso3.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:PisoIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                } );
+
+                //Arbol
+                const loaderArbol = new THREE.FBXLoader()
+                loaderArbol.load('./FBX/Arbolito6.fbx', object=>{
+                object.traverse(function fbxfunction (child) {
+                if (child.isMesh){
+
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+
+                    }});
+                    object.position.set(0, 0, 0)
+                    object.scale.set(1, 1, 1)
+                    scene.add( object )
+                } );
+                
+                //Chimenea
+                const loaderChimenea = new THREE.FBXLoader()
+                loaderChimenea.load('./FBX/Chimenea6.fbx', object=>{
+                object.traverse(function fbxfunction (child) {
+                if (child.isMesh){
+
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+
+                    }});
+                    object.position.set(0, 0, 0)
+                    object.scale.set(1, 1, 1)
+                    scene.add( object )
+                } );
+
+                //Tapete
+                const TapeteIm = new THREE.TextureLoader().load('./Texturas/Tapete2.jpg')
+                const loaderTapete = new THREE.FBXLoader();
+                loaderPiso.load( './FBX/Tapete.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:TapeteIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                    TapeteIm.wrapS = THREE.RepeatWrapping;
+                    TapeteIm.wrapT = THREE.RepeatWrapping;
+                    TapeteIm.repeat.set(2.5,2.5);
+                } );
+
+                //Sillones
+                const SofaIm = new THREE.TextureLoader().load('./Texturas/almohada.jpg')
+                const loadersofa = new THREE.FBXLoader();
+                loadersofa.load( './FBX/Sillones.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:SofaIm
+                                }
+                            );
+                            child.material =materialT
+
+                        }
+
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateY(600)
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                    } );
+
+                    //Almohadas
+                    const loaderAlmohadas = new THREE.FBXLoader()
+                    loaderAlmohadas.load('./FBX/Almohadas.fbx', object=>{
+                    object.traverse(function fbxfunction (child) {
+                    if (child.isMesh){
+
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+
+                    }});
+                    object.position.set(0, 0, 0)
+                    object.scale.set(1, 1, 1)
+                    scene.add( object )
+                } );
+
+                //Patas
+                const PatasIm = new THREE.TextureLoader().load('./Texturas/Metal.jpg')
+                const loaderPatas = new THREE.FBXLoader();
+                loaderPatas.load( './FBX/Patas2.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:PatasIm
+                                }
+                            );
+                            child.material =materialT
+
+                        }
+
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateY(600)
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                    } );
+
+                    //Mesa
+                    const MesaIm = new THREE.TextureLoader().load('./Texturas/almohada.jpg')
+                    const loaderMesa = new THREE.FBXLoader();
+                    loaderMesa.load( './FBX/Mesa2.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:MesaIm
+                                }
+                            );
+                            child.material =materialT
+
+                        }
+
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateY(600)
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                    } );
+
+                    //Regalos
+                const loaderRegalos = new THREE.FBXLoader()
+                loaderRegalos.load('./FBX/Regalos.fbx', object=>{
+                object.traverse(function fbxfunction (child) {
+                if (child.isMesh){
+
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+
+                    }});
+                    object.position.set(0, 0, 0)
+                    object.scale.set(1, 1, 1)
+                    scene.add( object )
+                } );
+
+                //Copas
+                const CopasIm = new THREE.TextureLoader().load('./Texturas/Metal.jpg')
+                const loaderCopas = new THREE.FBXLoader();
+                loaderCopas.load( './FBX/Copas.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:CopasIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                } );
+
+                //Platos
+                const PlatosIm = new THREE.TextureLoader().load('./Texturas/Porcelana.jpg')
+                const loaderPlatos = new THREE.FBXLoader();
+                loaderPlatos.load( './FBX/Platos.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:PlatosIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                } );
+
+                //Botellas
+                const BotellasIm = new THREE.TextureLoader().load('./Texturas/Metal.jpg')
+                const loaderBotellas = new THREE.FBXLoader();
+                loaderBotellas.load( './FBX/Botellas.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:BotellasIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                } );
+
+                     //Guirnalda
+                    const GuirnaldaIm = new THREE.TextureLoader().load('./Texturas/Guirnalda.png')
+                    const loaderGuirnalda = new THREE.FBXLoader();
+                    loaderGuirnalda.load( './FBX/Guirnalda.fbx', function ( object ) {
+                    object.traverse( function ( child ) {
+                        if ( child.isMesh ) {
+
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            var materialT = new THREE.MeshStandardMaterial
+                            (
+                                { 
+                                map:GuirnaldaIm
+                                }
+                            );
+                            child.material =materialT
+                        }
+                    } );
+                    object.position.set(0, 0, 0);
+                    //object.rotateZ(0);
+                    object.scale.set(1,1,1);
+                    scene.add( object );
+                } );
+
+                //Luces arbol
+                const lightP1 = new THREE.PointLight(0xffff80, 1, 40);
+                lightP1.position.set(6, 13, -8);
+                scene.add( lightP1 );
+                lightP1.castShadow = true
+                const sphereSize1=0;
+                const pointLightHelper1 = new THREE.PointLightHelper( lightP1, sphereSize1 );
+                scene.add( pointLightHelper1 );
+                //Luces chimenea
+                const lightP2 = new THREE.PointLight(0xff9900, 1.5, 70);
+                lightP2.position.set(7, 2, 0);
+                scene.add( lightP2 );
+                lightP2.castShadow = true
+                const sphereSize2=0;
+                const pointLightHelper2 = new THREE.PointLightHelper( lightP2, sphereSize2 );
+                scene.add( pointLightHelper2 );
+                
+                //Luces atras
+                const lightP3 = new THREE.PointLight(0xffffe6, 1, 20);
+                lightP3.position.set(-10, 15, 0);
+                scene.add( lightP3 );
+                lightP3.castShadow = true
+                const sphereSize3=0;
+                const pointLightHelper3 = new THREE.PointLightHelper( lightP3, sphereSize3 );
+                scene.add( pointLightHelper3 );
+
+                    const animate = function () {
+                    requestAnimationFrame( animate );
+					controls.update();
+                   
+
+                    renderer.render( scene, camera );
+                     };
+                animate();
+
+</script>
+</html>
+ 
