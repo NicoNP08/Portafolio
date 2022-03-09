@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Sistema Solar</title>
+		<style>
+			body { margin: 0;}
+			canvas {position: fixed; top: 0; left: 0}
+		</style>
+	</head>
+	<body>
+		<script src="https://threejs.org/build/three.js"></script>
+		<script src="./OrbitControls.js"></script>
+        
+        <script>
+
+            //Cesar Nicolas Rivera Patarroyo
+
+            //constibles para la Escena, la posicion de la camara y el render
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight, 0.1,1000);
+            const renderer = new THREE.WebGLRenderer();
+            //cosas de la escena
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            const controls = new THREE.OrbitControls(camera, renderer.domElement)
+            const ambientlight = new THREE.AmbientLight(0xffffff);
+            scene.add(ambientlight)
+            //fondo
+            const background = new THREE.TextureLoader().load('fondo2.jpg')
+            scene.background = background;
+            //sol
+            const solT = new THREE.TextureLoader().load('images/sol.jpg')
+            const geometry = new THREE.SphereGeometry(15);
+            const material = new THREE.MeshStandardMaterial({map: solT});
+            const sol = new THREE.Mesh(geometry, material);
+            scene.add(sol)
+            //mercurio
+            const mercuryT = new THREE.TextureLoader().load('images/mercurio.jpg')
+            const geometry2 = new THREE.SphereGeometry(2);
+            const material2 = new THREE.MeshStandardMaterial({map: mercuryT});
+            const mercurio = new THREE.Mesh(geometry2, material2);
+            scene.add(mercurio);
+            mercurio.position.setX(20)
+            //venus
+            const venusT = new THREE.TextureLoader().load('images/venus.jpg')
+            const geometry3 = new THREE.SphereGeometry(3);
+            const material3 = new THREE.MeshStandardMaterial({map: venusT});
+            const venus = new THREE.Mesh(geometry3, material3);
+            scene.add(venus);
+            venus.position.setX(30)
+            //tierra
+            const tierraT = new THREE.TextureLoader().load('images/tierra.jpg')
+            const geometry4 = new THREE.SphereGeometry(3.2);
+            const material4 = new THREE.MeshStandardMaterial({map: tierraT});
+            const tierra = new THREE.Mesh(geometry4, material4);
+            scene.add(tierra);
+            tierra.position.setX(40)
+            //Luna
+            const lunaT = new THREE.TextureLoader().load('images/luna.jpg')
+            const geometry5 = new THREE.SphereGeometry(1);
+            const material5 = new THREE.MeshStandardMaterial({map: lunaT});
+            const luna = new THREE.Mesh(geometry5, material5);
+            tierra.add(luna)
+
+            //marte
+            const marteT = new THREE.TextureLoader().load('images/marte.jpg')
+            const geometry6 = new THREE.SphereGeometry(2.5);
+            const material6 = new THREE.MeshStandardMaterial({map: marteT});
+            const marte = new THREE.Mesh(geometry6, material6);
+            scene.add(marte);
+            marte.position.setX(50);
+            //jupiter
+            const jupiterT = new THREE.TextureLoader().load('images/jupiter.jpg')
+            const geometry7 = new THREE.SphereGeometry(5);
+            const material7 = new THREE.MeshStandardMaterial({map: jupiterT});
+            const jupiter = new THREE.Mesh(geometry7, material7);
+            scene.add(jupiter);
+            jupiter.position.setX(60);
+            //saturno
+            const saturnoT = new THREE.TextureLoader().load('images/saturno.jpg')
+            const geometry8 = new THREE.SphereGeometry(4);
+            const material8 = new THREE.MeshStandardMaterial({map: saturnoT});
+            const saturno = new THREE.Mesh(geometry8, material8);
+            scene.add(saturno);
+            saturno.position.setX(75);
+            //anillos saturno
+            const anillosST = new THREE.TextureLoader().load('images/anillosSaturno.png')
+            const geometry9 = new THREE.RingGeometry(5,8,32);
+            const material9 = new THREE.MeshStandardMaterial({map: anillosST});
+            const anillossT = new THREE.Mesh(geometry9, material9);
+            scene.add(anillossT);
+            anillossT.position.setX(75);
+            anillossT.rotateX(Math.PI/5.6);
+            //urano
+            const uranoT = new THREE.TextureLoader().load('images/urano.jpg')
+            const geometry10 = new THREE.SphereGeometry(3.5);
+            const material10 = new THREE.MeshStandardMaterial({map: uranoT});
+            const urano = new THREE.Mesh(geometry10, material10);
+            scene.add(urano);
+            urano.position.setX(90);
+            //neptuno
+            const neptunoT = new THREE.TextureLoader().load('images/neptuno.jpg')
+            const geometry11 = new THREE.SphereGeometry(3);
+            const material11 = new THREE.MeshStandardMaterial({map: neptunoT});
+            const neptuno = new THREE.Mesh(geometry11, material11);
+            scene.add(neptuno);
+            neptuno.position.setX(100);
+
+            //Posicion de la camara
+            camera.position.set(100,100,100)
+            var t = 0;
+            sol.position.x=0;
+
+
+            function rotarPlanetas(speed, planeta, orbita){
+
+                planeta.position.x = Math.sin(speed)*orbita
+                planeta.position.z = Math.cos(speed)*orbita
+                
+            }
+            function rotarEjeP(){
+
+                sol.rotateY(0.02)
+                mercurio.rotateY(0.05)
+                venus.rotateY(0.05)
+                tierra.rotateY(0.05)
+                luna.rotateY(0.05)
+                marte.rotateY(0.05)
+                jupiter.rotateY(0.05)
+                saturno.rotateY(0.05)
+                anillossT.rotateZ(0.03)
+                urano.rotateY(0.05)
+                neptuno.rotateY(0.05)
+
+            }
+
+
+            //rotacion
+                function animate (){
+                requestAnimationFrame( animate )
+                controls.update()
+                rotarEjeP()
+                
+                t += 0.008
+                rotarPlanetas(t*5, mercurio, 20)
+                rotarPlanetas(t*4.5, venus, 30)
+                rotarPlanetas(t*4, tierra, 40)
+                rotarPlanetas(t*4, luna, 4.8)
+                rotarPlanetas(t*3.5, marte, 50)
+                rotarPlanetas(t*3, jupiter, 60)
+                rotarPlanetas(t*2.5, saturno, 75)
+                rotarPlanetas(t*2.5, anillossT, 75)
+                rotarPlanetas(t*2.3, urano, 90)
+                rotarPlanetas(t*2, neptuno, 100)
+
+                renderer.render( scene, camera);
+            }
+            animate()
+
+            //Cesar Nicolas Rivera Patarroyo
+
+        </script>
+	</body>
+    
+</html>
